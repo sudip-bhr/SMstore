@@ -110,6 +110,30 @@
   --sidebar-ring: oklch(0.556 0 0);
 }
 
+.highlight-deal {
+  animation: glowHighlight 0.8s ease-in-out alternate;
+  animation-iteration-count: 4; /* ~2 seconds */
+}
+
+.highlight-deal img {
+  filter: brightness(1.15) saturate(1.1);
+  transition: filter 0.3s ease-in-out;
+}
+
+@keyframes glowHighlight {
+  from {
+    box-shadow: 0 0 0px rgba(99, 102, 241, 0), 0 0 0px rgba(168, 85, 247, 0);
+    transform: scale(1);
+  }
+  to {
+    box-shadow: 
+      0 0 20px rgba(99, 102, 241, 0.8),
+      0 0 40px rgba(168, 85, 247, 0.6);
+    transform: scale(1.03);
+  }
+}
+
+
 @layer base {
   * {
     @apply border-border outline-ring/50;

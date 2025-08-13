@@ -9,7 +9,7 @@ import airpodspro from '../assets/images/AirPods_Pro .jpeg';
 import logitechmxmaster from '../assets/images/Logitech_MX_Master_3S.jpeg';
 import lgoledc4 from '../assets/images/LG_OLED_C4.jpeg';
 import asusrogstrix from '../assets/images/Asus_ROG_Strix_G16.jpeg';
-import bosequitecomfort from '../assets/images/Bose_QuietComfort_Ultra.jpeg';
+//import bosequitecomfort from '../assets/images/Bose_QuietComfort_Ultra.jpeg';
 import garimforerunner from '../assets/images/Garmin_Forerunner_965.jpeg';
 import canoneosr8 from '../assets/images/Canon_EOS_R8.jpeg';
 import nintendoswitcholed from '../assets/images/Nintendo_Switch_OLED.jpeg';
@@ -23,7 +23,7 @@ import iphone17air from '../assets/images/iPhone_17_Air.jpeg';
 import fairphone6 from '../assets/images/Fairphone_6.jpeg';
 import nothingphone3 from '../assets/images/Nothing_Phone_3.jpeg';
 import nintendoswitch2 from '../assets/images/Nintendo_Switch_2.jpeg';
-import frameworkdesktopamdstrixhaloapu from '../assets/images/Framework_Desktop_(AMD_Strix_Halo_APU).jpeg';
+import frameworkdesktopamdstrixhaloapu from '../assets/images/Framework_Desktop_AMD_Strix_Halo_APU.jpeg';
 import lenovothinkbookplusgen6rollable from '../assets/images/Lenovo_ThinkBook_Plus_Gen_6_Rollable.jpeg';
 import rokidairgov2smartglasses from '../assets/images/Rokid_AirGo_V2_Smart_Glasses.jpeg';
 import roborockomnigriprobotvacuum from '../assets/images/Roborock_OmniGrip_Robot_Vacuum.jpeg';
@@ -150,7 +150,7 @@ export const mockProducts: Product[] = [
     title: "MacBook Air M3",
     description: "Lightweight laptop with M3 chip, long battery life, and fanless design.",
     price: 1499,
-    category: "Laptop",
+    category: "Laptops",
     brand: "Apple",
     color: "Space Gray",
     stock: 15,
@@ -170,7 +170,7 @@ export const mockProducts: Product[] = [
     title: "Dell XPS 15",
     description: "Premium Windows laptop with OLED display and RTX 4050 GPU.",
     price: 1699,
-    category: "Laptop",
+    category: "Laptops",
     brand: "Dell",
     color: "Silver",
     stock: 12,
@@ -250,7 +250,7 @@ export const mockProducts: Product[] = [
     title: "Asus ROG Strix G16",
     description: "Gaming laptop with Intel i9, RTX 4070 GPU, and 240Hz display.",
     price: 1899,
-    category: "Laptop",
+    category: "Laptops",
     brand: "Asus",
     color: "Eclipse Gray",
     stock: 10,
@@ -274,7 +274,7 @@ export const mockProducts: Product[] = [
     brand: "Bose",
     color: "Triple Black",
     stock: 18,
-    images: [bosequitecomfort],
+    images: [asusrogstrix],
     ratings: [
       { star: 4, comment: "Excellent sound, slightly bulky.", postedBy: "User666" }
     ],
@@ -294,8 +294,7 @@ export const mockProducts: Product[] = [
     brand: "Garmin",
     color: "Black",
     stock: 22,
-    images:[garimforerunner]
-    ,
+    images:[garimforerunner],
     ratings: [
       { star: 5, comment: "Perfect for runners and triathletes.", postedBy: "User777" }
     ],
@@ -314,7 +313,7 @@ export const mockProducts: Product[] = [
     brand: "Canon",
     color: "Black",
     stock: 6,
-    images: [canoneosr8],
+    images:[canoneosr8],
     ratings: [
       { star: 5, comment: "Lightweight yet powerful.", postedBy: "User888" }
     ],
@@ -336,7 +335,7 @@ export const mockProducts: Product[] = [
     brand: "Nintendo",
     color: "White",
     stock: 40,
-    images: [nintendoswitcholed],
+    images:[nintendoswitcholed],
     ratings: [
       { star: 4, comment: "Fantastic portable gaming.", postedBy: "User999" }
     ],
@@ -356,7 +355,7 @@ export const mockProducts: Product[] = [
     brand: "Philips",
     color: "Multi-color",
     stock: 50,
-    images: [philipshuestarterkit],
+    images:[philipshuestarterkit],
     ratings: [
       { star: 5, comment: "Lighting automation made easy.", postedBy: "User147" }
     ],
@@ -377,7 +376,7 @@ export const mockProducts: Product[] = [
     brand: "GoPro",
     color: "Black",
     stock: 25,
-    images: [goprohero12black],
+    images:[goprohero12black],
     ratings: [
       { star: 5, comment: "Perfect for adventures.", postedBy: "User258" }
     ],
@@ -396,7 +395,7 @@ export const mockProducts: Product[] = [
     brand: "Dyson",
     color: "Yellow",
     stock: 14,
-    images: [dysonv15detect],
+    images:[dysonv15detect],
     ratings: [
       { star: 5, comment: "Makes cleaning oddly satisfying.", postedBy: "User369" }
     ],
@@ -416,7 +415,7 @@ export const mockProducts: Product[] = [
     brand: "Samsung",
     color: "White",
     stock: 8,
-    images: [samsungodysseyg9],
+    images:[samsungodysseyg9],
     ratings: [
       { star: 5, comment: "Immersive for both work and play.", postedBy: "User741" }
     ],
@@ -435,7 +434,7 @@ export const mockProducts: Product[] = [
     brand: "Anker",
     color: "Black",
     stock: 100,
-    images: [ankerpowercore20000],
+    images:[ankerpowercore20000],
     ratings: [
       { star: 5, comment: "Charges my phone multiple times.", postedBy: "User852" }
     ],
@@ -456,7 +455,7 @@ export const mockProducts: Product[] = [
     brand: "Samsung",
     color: "Titan Black",
     stock: 20,
-    images: [samsunggalaxys25ultra],
+    images:[samsunggalaxys25ultra],
     ratings: [],
     totalrating: 0,
     newArrival: true,
@@ -474,7 +473,7 @@ export const mockProducts: Product[] = [
     brand: "Apple",
     color: "Graphite",
     stock: 15,
-    images: [iphone17air],
+    images:[iphone17air],
     ratings: [],
     totalrating: 0,
     featured: true,
@@ -721,96 +720,6 @@ export const mockProducts: Product[] = [
   },
   {
     _id: "36",
-    title: "Framework Desktop (AMD Strix Halo APU)",
-    description: "Modular Mini-ITX PC with interchangeable front tiles, Wi-Fi 7, and up to 128 GB RAM.",
-    price: 999,
-    category: "Desktops",
-    brand: "Framework",
-    color: "Gunmetal",
-    stock: 12,
-    images: [],
-    ratings: [],
-    totalrating: 0,
-    newArrival: true,
-    reviews: [
-      { user: "Sam", comment: "Love the modular design.", stars: 5 },
-      { user: "Tina", comment: "Future-proof and compact.", stars: 5 }
-    ]
-  },
-  {
-    _id: "37",
-    title: "Lenovo ThinkBook Plus Gen 6 Rollable",
-    description: "Windows laptop with rollable display—14″ expands to 16.7″ vertical screen, Intel Ultra 7, 32 GB RAM.",
-    price: 2199,
-    category: "Laptops",
-    brand: "Lenovo",
-    color: "Iron Grey",
-    stock: 8,
-    images: [],
-    ratings: [],
-    totalrating: 0,
-    featured: true,
-    reviews: [
-      { user: "Uma", comment: "The rollable feature is magic.", stars: 5 },
-      { user: "Victor", comment: "Premium feel and smooth performance.", stars: 5 }
-    ]
-  },
-  {
-    _id: "38",
-    title: "Rokid AirGo V2 Smart Glasses",
-    description: "AI-powered smart glasses with voice assistant, real-time translation, and object recognition.",
-    price: 399,
-    category: "Wearables",
-    brand: "Rokid",
-    color: "Charcoal",
-    stock: 20,
-    images: [],
-    ratings: [],
-    totalrating: 0,
-    newArrival: true,
-    reviews: [
-      { user: "Wes", comment: "Makes traveling abroad easier.", stars: 5 },
-      { user: "Xena", comment: "Comfortable for long use.", stars: 5 }
-    ]
-  },
-  {
-    _id: "39",
-    title: "Roborock OmniGrip Robot Vacuum",
-    description: "Robot vacuum with 22 kPa suction and retractable claw to pick up small obstacles up to 10.5 oz.",
-    price: 699,
-    category: "Home Appliances",
-    brand: "Roborock",
-    color: "White",
-    stock: 15,
-    images: [],
-    ratings: [],
-    totalrating: 0,
-    featured: true,
-    reviews: [
-      { user: "Yuri", comment: "Cleans corners really well.", stars: 5 },
-      { user: "Zara", comment: "Set it and forget it cleaning.", stars: 5 }
-    ]
-  },
-  {
-    _id: "41",
-    title: "Panasonic Z95B OLED TV",
-    description: "Award-winning OLED TV with ultra-bright 4,000 nits panel, AI-enhanced display and sound.",
-    price: 2499,
-    category: "Television",
-    brand: "Panasonic",
-    color: "Midnight Black",
-    stock: 5,
-    images: [],
-    ratings: [],
-    totalrating: 0,
-    featured: true,
-    reviews: [
-      { user: "Alex", comment: "Picture quality is breathtaking.", stars: 5 },
-      { user: "Bree", comment: "Loving the high brightness levels.", stars: 5 }
-    ]
-  },
-  {
-    _id: "42",
     title: "Audio-Technica ATH-CKS50TW2 Earbuds",
     description: "Wireless earbuds with up to 65 hours of playback, launched at CES 2025.",
     price: 179,
@@ -828,7 +737,7 @@ export const mockProducts: Product[] = [
     ]
   },
   {
-    _id: "43",
+    _id: "37",
     title: "Belkin Stage PowerGrip",
     description: "Portable power bank with integrated stand and grip, ideal for content creators.",
     price: 99,
@@ -846,7 +755,7 @@ export const mockProducts: Product[] = [
     ]
   },
   {
-    _id: "44",
+    _id: "38",
     title: "Nvidia Project Digits",
     description: "Personal AI supercomputer with powerful processing capabilities, starting at $3,000.",
     price: 3000,
@@ -864,7 +773,7 @@ export const mockProducts: Product[] = [
     ]
   },
   {
-    _id: "45",
+    _id: "39",
     title: "Tesla Optimus Gen 2 Humanoid Robot",
     description: "Advanced humanoid robot designed for various applications, unveiled in December 2023.",
     price: 50000,
@@ -882,7 +791,7 @@ export const mockProducts: Product[] = [
     ]
   },
   {
-    _id: "46",
+    _id: "40",
     title: "LG StanbyME 2 Portable TV",
     description: "27-inch touchscreen portable TV with improved battery life, showcased at CES 2025.",
     price: 799,
@@ -900,7 +809,7 @@ export const mockProducts: Product[] = [
     ]
   },
   {
-    _id: "47",
+    _id: "41",
     title: "Eufy 3-in-1 E20 Robot Vacuum",
     description: "Robot vacuum with mopping and UV sterilization features, highlighted at CES 2025.",
     price: 399,
@@ -918,7 +827,7 @@ export const mockProducts: Product[] = [
     ]
   },
   {
-    _id: "48",
+    _id: "42",
     title: "PocketBook InkPoster",
     description: "Advanced E Ink digital art display, offering a new way to showcase digital art.",
     price: 299,
@@ -936,7 +845,7 @@ export const mockProducts: Product[] = [
     ]
   },
   {
-    _id: "49",
+    _id: "43",
     title: "Anker Solar Beach Umbrella",
     description: "Beach umbrella with integrated solar panels to charge devices, introduced at CES 2025.",
     price: 199,
@@ -952,24 +861,5 @@ export const mockProducts: Product[] = [
       { user: "Quinn", comment: "Charges phone while relaxing!", stars: 5 },
       { user: "Rhea", comment: "Stable even on windy days.", stars: 5 }
     ]
-  },
-  {
-    _id: "50",
-    title: "Belkin Stage PowerGrip",
-    description: "Portable power bank with integrated stand and grip, ideal for content creators.",
-    price: 99,
-    category: "Accessories",
-    brand: "Belkin",
-    color: "White",
-    stock: 60,
-    images: [],
-    ratings: [],
-    totalrating: 0,
-    newArrival: true,
-    reviews: [
-      { user: "Sam", comment: "Compact and functional.", stars: 5 },
-      { user: "Tara", comment: "Great for vlogging on the go.", stars: 5 }
-    ]
   }
-
 ];

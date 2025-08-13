@@ -1,4 +1,9 @@
+import type { ReactNode } from "react";
+
 export interface Product {
+  dealEndsAt?: string | undefined;
+  isExclusive?: boolean;
+  isBestSeller?: boolean;
    _id: string;
   title: string;
   description: string;
@@ -21,6 +26,7 @@ export interface Product {
   newArrival?: boolean;
 };
 export interface Review {
+    postedBy?: ReactNode;
     user: string;
     comment: string;
     stars: number;
