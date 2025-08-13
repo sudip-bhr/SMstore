@@ -9,6 +9,39 @@ import airpodspro from '../assets/images/AirPods_Pro .jpeg';
 import logitechmxmaster from '../assets/images/Logitech_MX_Master_3S.jpeg';
 import lgoledc4 from '../assets/images/LG_OLED_C4.jpeg';
 import asusrogstrix from '../assets/images/Asus_ROG_Strix_G16.jpeg';
+import bosequitecomfort from '../assets/images/Bose_QuietComfort_Ultra.jpeg';
+import garimforerunner from '../assets/images/Garmin_Forerunner_965.jpeg';
+import canoneosr8 from '../assets/images/Canon_EOS_R8.jpeg';
+import nintendoswitcholed from '../assets/images/Nintendo_Switch_OLED.jpeg';
+import philipshuestarterkit from '../assets/images/Philips_Hue_Starter_Kit.jpeg';
+import goprohero12black from '../assets/images/GoPro_HERO12_Black.jpeg';
+import dysonv15detect from '../assets/images/Dyson_V15_Detect.jpeg';
+import samsungodysseyg9 from '../assets/images/Samsung_Odyssey_G9.jpeg';
+import ankerpowercore20000 from '../assets/images/Anker_PowerCore_20000.jpeg';
+import samsunggalaxys25ultra from '../assets/images/Samsung_Galaxy_S25_Ultra.jpeg';
+import iphone17air from '../assets/images/iPhone_17_Air.jpeg';
+import fairphone6 from '../assets/images/Fairphone_6.jpeg';
+import nothingphone3 from '../assets/images/Nothing_Phone_3.jpeg';
+import nintendoswitch2 from '../assets/images/Nintendo_Switch_2.jpeg';
+import frameworkdesktopamdstrixhaloapu from '../assets/images/Framework_Desktop_(AMD_Strix_Halo_APU).jpeg';
+import lenovothinkbookplusgen6rollable from '../assets/images/Lenovo_ThinkBook_Plus_Gen_6_Rollable.jpeg';
+import rokidairgov2smartglasses from '../assets/images/Rokid_AirGo_V2_Smart_Glasses.jpeg';
+import roborockomnigriprobotvacuum from '../assets/images/Roborock_OmniGrip_Robot_Vacuum.jpeg';
+import panasonicz95boledtv from '../assets/images/Panasonic_Z95B_OLED_TV.jpeg';
+import oppoa5pro5g from '../assets/images/Oppo_A5_Pro_5G.jpeg';
+import suuntorunwatch from '../assets/images/Suunto_Run_Watch.jpeg';
+import whooplifewithmgsensor from '../assets/images/Whoop_Life_with_MG_Sensor.jpeg';
+import core2temperaturesensor from '../assets/images/Core_2_Temperature_Sensor.jpeg';
+import cyberpadtreadmill from '../assets/images/CyberPad_Treadmill.jpeg';
+import audiotechnicaathcks50tw2earbuds from '../assets/images/Audio-Technica_ATH-CKS50TW2_Earbuds.jpeg';
+import belkinstagepowergrip from '../assets/images/Belkin_Stage_PowerGrip.jpeg';
+import nvidiaprojectdigits from '../assets/images/Nvidia_Project_Digits.jpeg';
+import teslaoptimusgen2humanoidrobot from '../assets/images/Tesla_Optimus_Gen_2_Humanoid_Robot.jpeg';
+import lgstanbyme2portabletv from '../assets/images/LG_StanbyME_2_Portable_TV.jpeg';
+import eufy3in1e20robotvacuum from '../assets/images/Eufy_3-in-1_E20_Robot_Vacuum.jpeg';
+import pocketbookinkposter from '../assets/images/PocketBook_InkPoster.jpeg';
+import ankersolarbeachumbrella from '../assets/images/Anker_Solar_Beach_Umbrella.jpeg';
+
 import type { Product } from './types';
 
 export const mockProducts: Product[] = [
@@ -241,7 +274,7 @@ export const mockProducts: Product[] = [
     brand: "Bose",
     color: "Triple Black",
     stock: 18,
-    images: [],
+    images: [bosequitecomfort],
     ratings: [
       { star: 4, comment: "Excellent sound, slightly bulky.", postedBy: "User666" }
     ],
@@ -261,7 +294,8 @@ export const mockProducts: Product[] = [
     brand: "Garmin",
     color: "Black",
     stock: 22,
-    images: [],
+    images:[garimforerunner]
+    ,
     ratings: [
       { star: 5, comment: "Perfect for runners and triathletes.", postedBy: "User777" }
     ],
@@ -280,7 +314,7 @@ export const mockProducts: Product[] = [
     brand: "Canon",
     color: "Black",
     stock: 6,
-    images: [],
+    images: [canoneosr8],
     ratings: [
       { star: 5, comment: "Lightweight yet powerful.", postedBy: "User888" }
     ],
@@ -302,7 +336,7 @@ export const mockProducts: Product[] = [
     brand: "Nintendo",
     color: "White",
     stock: 40,
-    images: [],
+    images: [nintendoswitcholed],
     ratings: [
       { star: 4, comment: "Fantastic portable gaming.", postedBy: "User999" }
     ],
@@ -322,7 +356,7 @@ export const mockProducts: Product[] = [
     brand: "Philips",
     color: "Multi-color",
     stock: 50,
-    images: [],
+    images: [philipshuestarterkit],
     ratings: [
       { star: 5, comment: "Lighting automation made easy.", postedBy: "User147" }
     ],
@@ -343,7 +377,7 @@ export const mockProducts: Product[] = [
     brand: "GoPro",
     color: "Black",
     stock: 25,
-    images: [],
+    images: [goprohero12black],
     ratings: [
       { star: 5, comment: "Perfect for adventures.", postedBy: "User258" }
     ],
@@ -362,7 +396,7 @@ export const mockProducts: Product[] = [
     brand: "Dyson",
     color: "Yellow",
     stock: 14,
-    images: [],
+    images: [dysonv15detect],
     ratings: [
       { star: 5, comment: "Makes cleaning oddly satisfying.", postedBy: "User369" }
     ],
@@ -382,7 +416,7 @@ export const mockProducts: Product[] = [
     brand: "Samsung",
     color: "White",
     stock: 8,
-    images: [],
+    images: [samsungodysseyg9],
     ratings: [
       { star: 5, comment: "Immersive for both work and play.", postedBy: "User741" }
     ],
@@ -401,7 +435,7 @@ export const mockProducts: Product[] = [
     brand: "Anker",
     color: "Black",
     stock: 100,
-    images: [],
+    images: [ankerpowercore20000],
     ratings: [
       { star: 5, comment: "Charges my phone multiple times.", postedBy: "User852" }
     ],
@@ -422,7 +456,7 @@ export const mockProducts: Product[] = [
     brand: "Samsung",
     color: "Titan Black",
     stock: 20,
-    images: [],
+    images: [samsunggalaxys25ultra],
     ratings: [],
     totalrating: 0,
     newArrival: true,
@@ -440,7 +474,7 @@ export const mockProducts: Product[] = [
     brand: "Apple",
     color: "Graphite",
     stock: 15,
-    images: [],
+    images: [iphone17air],
     ratings: [],
     totalrating: 0,
     featured: true,
@@ -459,7 +493,7 @@ export const mockProducts: Product[] = [
     brand: "Fairphone",
     color: "Fair Gray",
     stock: 25,
-    images: [],
+    images: [fairphone6],
     ratings: [],
     totalrating: 0,
     featured: true,
@@ -478,7 +512,7 @@ export const mockProducts: Product[] = [
     brand: "Nothing",
     color: "Clear White",
     stock: 18,
-    images: [],
+    images: [nothingphone3],
     ratings: [],
     totalrating: 0,
     featured: true,
@@ -496,7 +530,7 @@ export const mockProducts: Product[] = [
     brand: "Nintendo",
     color: "Neon Blue-Red",
     stock: 30,
-    images: [],
+    images: [nintendoswitch2],
     ratings: [],
     totalrating: 0,
     newArrival: true,
@@ -514,7 +548,7 @@ export const mockProducts: Product[] = [
     brand: "Framework",
     color: "Gunmetal",
     stock: 12,
-    images: [],
+    images: [frameworkdesktopamdstrixhaloapu],
     ratings: [],
     totalrating: 0,
     newArrival: true,
@@ -532,7 +566,7 @@ export const mockProducts: Product[] = [
     brand: "Lenovo",
     color: "Iron Grey",
     stock: 8,
-    images: [],
+    images: [lenovothinkbookplusgen6rollable],
     ratings: [],
     totalrating: 0,
     featured: true,
@@ -550,7 +584,7 @@ export const mockProducts: Product[] = [
     brand: "Rokid",
     color: "Charcoal",
     stock: 20,
-    images: [],
+    images: [rokidairgov2smartglasses],
     ratings: [],
     totalrating: 0,
     newArrival: true,
@@ -568,7 +602,7 @@ export const mockProducts: Product[] = [
     brand: "Roborock",
     color: "White",
     stock: 15,
-    images: [],
+    images: [roborockomnigriprobotvacuum],
     ratings: [],
     totalrating: 0,
     featured: true,
@@ -586,7 +620,7 @@ export const mockProducts: Product[] = [
     brand: "Panasonic",
     color: "Midnight Black",
     stock: 5,
-    images: [],
+    images: [panasonicz95boledtv],
     ratings: [],
     totalrating: 0,
     featured: true,
@@ -604,7 +638,7 @@ export const mockProducts: Product[] = [
     brand: "Oppo",
     color: "Midnight Black",
     stock: 40,
-    images: [],
+    images: [oppoa5pro5g],
     ratings: [],
     totalrating: 0,
     newArrival: true,
@@ -622,7 +656,7 @@ export const mockProducts: Product[] = [
     brand: "Suunto",
     color: "Slate Gray",
     stock: 25,
-    images: [],
+    images: [suuntorunwatch],
     ratings: [],
     totalrating: 0,
     newArrival: true,
@@ -640,7 +674,7 @@ export const mockProducts: Product[] = [
     brand: "Whoop",
     color: "Onyx Black",
     stock: 30,
-    images: [],
+    images: [whooplifewithmgsensor],
     ratings: [],
     totalrating: 0,
     newArrival: true,
@@ -658,7 +692,7 @@ export const mockProducts: Product[] = [
     brand: "Core",
     color: "Silver",
     stock: 15,
-    images: [],
+    images: [core2temperaturesensor],
     ratings: [],
     totalrating: 0,
     newArrival: true,
@@ -676,7 +710,7 @@ export const mockProducts: Product[] = [
     brand: "CyberPad",
     color: "Black",
     stock: 20,
-    images: [],
+    images: [cyberpadtreadmill],
     ratings: [],
     totalrating: 0,
     newArrival: true,
@@ -784,7 +818,7 @@ export const mockProducts: Product[] = [
     brand: "Audio-Technica",
     color: "Black",
     stock: 50,
-    images: [],
+    images: [audiotechnicaathcks50tw2earbuds],
     ratings: [],
     totalrating: 0,
     newArrival: true,
@@ -802,7 +836,7 @@ export const mockProducts: Product[] = [
     brand: "Belkin",
     color: "White",
     stock: 60,
-    images: [],
+    images: [belkinstagepowergrip],
     ratings: [],
     totalrating: 0,
     newArrival: true,
@@ -820,7 +854,7 @@ export const mockProducts: Product[] = [
     brand: "Nvidia",
     color: "Silver",
     stock: 5,
-    images: [],
+    images: [nvidiaprojectdigits],
     ratings: [],
     totalrating: 0,
     newArrival: true,
@@ -838,7 +872,7 @@ export const mockProducts: Product[] = [
     brand: "Tesla",
     color: "White",
     stock: 2,
-    images: [],
+    images: [teslaoptimusgen2humanoidrobot],
     ratings: [],
     totalrating: 0,
     newArrival: true,
@@ -856,7 +890,7 @@ export const mockProducts: Product[] = [
     brand: "LG",
     color: "White",
     stock: 25,
-    images: [],
+    images: [lgstanbyme2portabletv],
     ratings: [],
     totalrating: 0,
     newArrival: true,
@@ -874,7 +908,7 @@ export const mockProducts: Product[] = [
     brand: "Eufy",
     color: "Black",
     stock: 40,
-    images: [],
+    images: [eufy3in1e20robotvacuum],
     ratings: [],
     totalrating: 0,
     newArrival: true,
@@ -892,7 +926,7 @@ export const mockProducts: Product[] = [
     brand: "PocketBook",
     color: "Black",
     stock: 30,
-    images: [],
+    images: [pocketbookinkposter],
     ratings: [],
     totalrating: 0,
     newArrival: true,
@@ -910,7 +944,7 @@ export const mockProducts: Product[] = [
     brand: "Anker",
     color: "Blue",
     stock: 50,
-    images: [],
+    images: [ankersolarbeachumbrella],
     ratings: [],
     totalrating: 0,
     newArrival: true,

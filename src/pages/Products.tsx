@@ -1,23 +1,34 @@
-import React, { useState } from "react";
-import { mockProducts } from "../utils/mockData";
+import React, { useState, useEffect } from "react";
 import { useCart } from "../context/CartContext";
+import { useAuth } from "../context/AuthContext"; // For user login status
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
+import { Textarea } from "@/components/ui/textarea";
 import { Star } from "lucide-react";
-import type { Product } from "@/utils/types";
+import type { Product, Review } from "@/utils/types";
+import { useProducts } from "@/context/ProductContext";
 
 const Products: React.FC = () => {
+  const { products } = useProducts();
+  const { addToCart } = useCart();
+  const { currentUser } = useAuth();
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [currentPage, setCurrentPage] = useState(1);
-  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null); // holds the clicked product
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
 
-  const productsPerPage = 6;
-  const { addToCart } = useCart();
+  // For reviews of currently selected product
+  const [reviews, setReviews] = useState<Review[]>([]);
+  const [reviewText, setReviewText] = useState("");
+  const [rating, setRating] = useState(0);
 
-  const categories = ["All", ...Array.from(new Set(mockProducts.map((p) => p.category)))];
+  const productsPerPage = 5;
 
-  const filteredProducts = mockProducts.filter((product) => {
+  // Filter categories from products
+  const categories = ["All", ...Array.from(new Set(products.map((p) => p.category)))];
+
+  // Filter products based on search and category
+  const filteredProducts = products.filter((product) => {
     const matchesSearch = product.title.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesCategory = selectedCategory === "All" || product.category === selectedCategory;
     return matchesSearch && matchesCategory;
@@ -31,6 +42,34 @@ const Products: React.FC = () => {
   const handlePageChange = (page: number) => {
     if (page < 1 || page > totalPages) return;
     setCurrentPage(page);
+  };
+
+  // Load reviews from localStorage or product on modal open
+  useEffect(() => {
+    if (selectedProduct) {
+      const stored = localStorage.getItem(`reviews_${selectedProduct._id}`);
+      setReviews(stored ? JSON.parse(stored) : selectedProduct.reviews || []);
+      setReviewText("");
+      setRating(0);
+    }
+  }, [selectedProduct]);
+
+  const handleAddReview = () => {
+    if (!currentUser) return alert("Please login to leave a review.");
+    if (!reviewText.trim() || rating === 0) return alert("Please enter rating and review text.");
+
+    const newReview: Review = {
+      user: currentUser.username,
+      comment: reviewText,
+      stars: rating,
+    };
+
+    const updatedReviews = [...reviews, newReview];
+    setReviews(updatedReviews);
+    localStorage.setItem(`reviews_${selectedProduct!._id}`, JSON.stringify(updatedReviews));
+
+    setReviewText("");
+    setRating(0);
   };
 
   return (
@@ -130,18 +169,18 @@ const Products: React.FC = () => {
         <p className="text-gray-500">No products found.</p>
       )}
 
-      {/* Product Detail Modal */}
+      {/* Product Detail Modal with Reviews and Add Review Form */}
       {selectedProduct && (
         <Dialog open={!!selectedProduct} onOpenChange={() => setSelectedProduct(null)}>
-          <DialogContent className="max-w-2xl backdrop-blur-md">
+          <DialogContent className="max-w-3xl max-h-[80vh] overflow-y-auto backdrop-blur-md p-4 sm:p-6 rounded-lg">
             <DialogHeader>
               <DialogTitle>{selectedProduct.title}</DialogTitle>
             </DialogHeader>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <img
                 src={selectedProduct.images[0]}
                 alt={selectedProduct.title}
-                className="aspect-[4/3] w-auto h-auto object.contain rounded-lg"
+                className="w-full h-auto max-h-60 sm:max-h-[400px] object-contain rounded-lg mx-auto"
               />
               <div>
                 <p className="text-sm text-gray-500">{selectedProduct.brand}</p>
@@ -151,7 +190,7 @@ const Products: React.FC = () => {
                   {[...Array(5)].map((_, i) => (
                     <Star
                       key={i}
-                      className={`w-4 h-4 ${
+                      className={`w-5 h-5 sm:w-5 sm:h-5 ${
                         i < selectedProduct.totalrating ? "text-yellow-500" : "text-gray-300"
                       }`}
                       fill={i < selectedProduct.totalrating ? "currentColor" : "none"}
@@ -164,19 +203,68 @@ const Products: React.FC = () => {
               </div>
             </div>
 
-            {/* Reviews */}
-            <div className="mt-4">
-              <h3 className="font-semibold mb-2">Reviews</h3>
-              {selectedProduct.reviews && selectedProduct.reviews.length > 0 ? (
-                selectedProduct.reviews.map((review, _id) => (
-                  <div key={_id} className="border-b py-2">
-                    <p className="text-sm font-semibold">{review.user}</p>
-                    <p className="text-gray-600">{review.comment}</p>
-                  </div>
-                ))
+            {/* Reviews List */}
+            <div className="mt-8 max-h-48 sm:max-h-72 overflow-y-auto space-y-4">
+              <h2 className="text-2xl font-semibold mb-4">Reviews</h2>
+
+              {reviews.length > 0 ? (
+                <div className="space-y-4 max-h-72 overflow-y-auto">
+                  {reviews.map((review, idx) => (
+                    <div
+                      key={idx}
+                      className="border p-4 rounded-lg shadow-sm bg-white"
+                    >
+                      <div className="flex items-center justify-between mb-2">
+                        <p className="font-semibold">{review.user}</p>
+                        <div className="flex items-center">
+                          {[...Array(5)].map((_, i) => (
+                            <Star
+                              key={i}
+                              className={`w-3 h-3 ${
+                                i < review.stars ? "text-yellow-500" : "text-gray-300"
+                              }`}
+                              fill={i < review.stars ? "currentColor" : "none"}
+                            />
+                          ))}
+                        </div>
+                      </div>
+                      <p className="text-gray-600">{review.comment}</p>
+                    </div>
+                  ))}
+                </div>
               ) : (
                 <p className="text-gray-500">No reviews yet.</p>
               )}
+
+              {/* Add Review Form */}
+              <div className="mt-6" >
+                {currentUser ? (
+                  <div className="space-y-4">
+                    <div className="flex items-center gap-2">
+                      {[...Array(5)].map((_, i) => (
+                        <Star
+                          key={i}
+                          className={`w-6 h-6 cursor-pointer ${
+                            i < rating ? "text-yellow-500" : "text-gray-300"
+                          }`}
+                          fill={i < rating ? "currentColor" : "none"}
+                          onClick={() => setRating(i + 1)}
+                        />
+                      ))}
+                    </div>
+                    <Textarea
+                      placeholder="Write your review..."
+                      value={reviewText}
+                      onChange={(e) => setReviewText(e.target.value)}
+                    />
+                    <Button onClick={handleAddReview}>Submit Review</Button>
+                  </div>
+                ) : (
+                  <p className="text-gray-500">
+                    You must be logged in to leave a review.
+                  </p>
+                )}
+              </div>
             </div>
           </DialogContent>
         </Dialog>
@@ -186,4 +274,6 @@ const Products: React.FC = () => {
 };
 
 export default Products;
+
+
 
