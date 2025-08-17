@@ -4,7 +4,8 @@ import { FaBars, FaTimes, FaUser } from "react-icons/fa";
 import { motion } from "framer-motion";
 import { useAuth } from "../context/AuthContext";
 import { useCart } from "../context/CartContext";
-import logo from "../assets/logo.svg"; // adjust path if needed
+import logo from "../assets/logo.svg";
+import { Button } from "@/components/ui/button";
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -103,19 +104,24 @@ const Header = () => {
                 <span className="text-gray-800 hidden sm:inline">
                   {currentUser.username}
                 </span>
-                <button
+                <Button
                   onClick={handleLogout}
-                  className="px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-600 transition text-sm sm:text-base"
+                 size="lg"
+            className="bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 transform transition-transform hover:scale-105"
                 >
                   Logout
-                </button>
+                </Button>
               </>
             ) : (
               <Link
                 to="/sign-up"
-                className="flex items-center px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-600 transition text-sm sm:text-base"
               >
-                <FaUser className="mr-1" /> Sign Up
+                <Button
+                  size="lg"
+                  className="bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 transform transition-transform hover:scale-105"
+                  >
+                  <FaUser className="mr-1" /> Sign Up
+                </Button>
               </Link>
             )}
           </div>

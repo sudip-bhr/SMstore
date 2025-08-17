@@ -7,33 +7,37 @@ import Cart from "./pages/Cart";
 import ProtectedRoute from "./components/ProtectedRoute";
 import SignIn from "./pages/SignIn";
 import Signup from "./pages/Signup";
+import { Toaster } from "sonner";
 
 function App() {
   return (
-    <Router>
-      <div className="flex flex-col min-h-screen">
-        <Header />
-        {/* main content area grows to fill space */}
-        <main className="flex-grow">
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/products" element={<Products />} />
+    <div className="App">
+      <Toaster/>
+      <Router>
+        <div className="flex flex-col min-h-screen">
+          <Header />
+          {/* main content area grows to fill space */}
+          <main className="flex-grow">
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/products" element={<Products />} />
 
-            <Route
-              path="/cart"
-              element={
-                <ProtectedRoute>
-                  <Cart />
-                </ProtectedRoute>
-              }
-            />
-            <Route path="/sign-up" element={<Signup />} />
-            <Route path="/sign-in" element={<SignIn />} />
-          </Routes>
-        </main>
-        <Footer />
-      </div>
-    </Router>
+              <Route
+                path="/cart"
+                element={
+                  <ProtectedRoute>
+                    <Cart />
+                  </ProtectedRoute>
+                }
+              />
+              <Route path="/sign-up" element={<Signup />} />
+              <Route path="/sign-in" element={<SignIn />} />
+            </Routes>
+          </main>
+          <Footer />
+        </div>
+      </Router>
+    </div>
   );
 }
 

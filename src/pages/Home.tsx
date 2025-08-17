@@ -15,6 +15,9 @@ import { Badge } from "@/components/ui/badge";
 import type { Product as ImportedProduct, Product } from "@/utils/types";
 import Fuse from "fuse.js";
 
+/* ------------------------------------------------------------------ */
+/* Corrected Types */
+/* ------------------------------------------------------------------ */
 type Review = { star: number; comment: string; postedBy: string; id?: string };
 
 type ProductWithExtras = Omit<ImportedProduct, "reviews" | "ratings"> & {
@@ -105,7 +108,7 @@ const HeroWithDealCountdown: React.FC<{
           </Button>
           <Link to="/products">
             <Button size="lg" variant="outline">
-              Shop All Deals
+              Shop Now
             </Button>
           </Link>
         </div>
@@ -190,70 +193,6 @@ const ProductCard: React.FC<{
     </Card>
   );
 };
-
-/* ---------------------------- Showcase -----------------------------------*/
-<div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-6 bg-white rounded-2xl">
-      
-      {/* iPhone 15 Pro */}
-      <Card className="flex flex-col justify-between p-8 rounded-2xl shadow-sm">
-        <CardContent className="flex flex-col gap-6">
-          <div className="text-3xl font-semibold leading-snug">
-            Strength. Beauty. <br /> Titanium.
-          </div>
-          <p className="text-lg font-medium flex items-center gap-2">
-            <span className="font-bold"></span> iPhone 15 Pro
-          </p>
-          <AspectRatio ratio={16 / 9}>
-            <img
-              src="src/assests/images/iPhone_15_Pro.jpeg"
-              alt="iPhone 16 Pro Max"
-              className="object-contain w-full h-full"
-            />
-          </AspectRatio>
-        </CardContent>
-      </Card>
-
-      {/* Samsung Galaxy Ultra */}
-      <Card className="p-8 bg-black rounded-2xl text-white flex flex-col justify-center">
-        <CardContent className="flex flex-col items-center gap-6">
-          <h2 className="text-2xl font-bold">Samsung</h2>
-          <p className="text-xl font-semibold">Galaxy Ultra</p>
-          <div className="flex gap-6 justify-center">
-            <img
-              src="/images/marshall-black.png"
-              alt="Marshall Black"
-              className="w-40 object-contain"
-            />
-            <img
-              src="src/assets/images/Samsung_Galaxy_S24_Ultra.jpeg"
-              alt="Marshall Cream"
-              className="w-40 object-contain"
-            />
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Mac Mini */}
-      <Card className="p-8 rounded-2xl shadow-sm bg-neutral-100 flex flex-col justify-between">
-        <CardContent className="flex flex-col gap-6 items-start">
-          <h2 className="text-2xl font-semibold flex items-center gap-2">
-            <span className="font-bold"></span> Mac mini
-          </h2>
-          <p className="text-lg">
-            Fits, flexes, and flies in any setup.
-          </p>
-          <p className="text-sm text-muted-foreground">Mac mini with M4 chip.</p>
-          <AspectRatio ratio={16 / 9}>
-            <img
-              src="src/assets/images/Mac_mini.jpeg"
-              alt="Mac Mini"
-              className="object-contain w-full h-full"
-            />
-          </AspectRatio>
-        </CardContent>
-      </Card>
-
-    </div>
 
 /* ----------------------------- ProductCarousel ----------------------------- */
 const ProductCarousel: React.FC<{

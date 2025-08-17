@@ -4,6 +4,7 @@ import { useCart } from "../context/CartContext";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { toast } from "sonner";
 import {
   Table,
   TableBody,
@@ -17,6 +18,30 @@ import CheckoutModal from "./CheckoutModal";
 
 const Cart: React.FC = () => {
   const { cart, updateQuantity, removeItem, clearCart } = useCart();
+  
+  const handleRemoveItem = (id: string, title: string) => {
+    removeItem(id);
+    toast.success(`${title} removed from cart!`, {
+      style: {
+        backgroundColor: '#ef4444', // Red color for removal
+        color: 'white',
+      },
+      position: 'bottom-right',
+      duration: 2000,
+    });
+  };
+
+  const handleClearCart = () => {
+    clearCart();
+    toast.success('Cart cleared successfully!', {
+      style: {
+        backgroundColor: '#ef4444', // Red color for removal
+        color: 'white',
+      },
+      position: 'bottom-right',
+      duration: 2000,
+    });
+  };
   const [isCheckoutOpen, setCheckoutOpen] = useState(false);
 
   const subtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
@@ -79,7 +104,7 @@ const Cart: React.FC = () => {
                   </TableCell>
                   <TableCell>${(item.price * item.quantity).toFixed(2)}</TableCell>
                   <TableCell>
-                    <Button variant="ghost" className="text-red-600 hover:text-red-700" onClick={() => removeItem(item._id)}>
+                    <Button variant="ghost" className="text-red-600 hover:text-red-700" onClick={() => handleRemoveItem(item._id, item.title)}>
                       <Trash className="w-5 h-5" />
                     </Button>
                   </TableCell>
@@ -121,7 +146,7 @@ const Cart: React.FC = () => {
                 <Button
                   variant="ghost"
                   className="text-red-600 hover:text-red-700"
-                  onClick={() => removeItem(item._id)}
+                  onClick={() => handleRemoveItem(item._id, item.title)}
                 >
                   <Trash className="w-5 h-5" />
                 </Button>
@@ -140,7 +165,7 @@ const Cart: React.FC = () => {
           <Button className="w-full" onClick={() => setCheckoutOpen(true)}>
             Proceed to Checkout
           </Button>
-          <Button variant="outline" className="mt-3 w-full text-red-600" onClick={clearCart}>
+          <Button variant="outline" className="mt-3 w-full text-red-600" onClick={handleClearCart}>
             Clear Cart
           </Button>
         </aside>
@@ -158,7 +183,6 @@ const Cart: React.FC = () => {
 };
 
 export default Cart;
-
 
 
 

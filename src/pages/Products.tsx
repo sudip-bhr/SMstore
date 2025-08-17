@@ -7,6 +7,7 @@ import { useAuth } from "../context/AuthContext";
 import { useProducts } from "@/context/ProductContext";
 import type { Product, Review } from "@/utils/types";
 
+
 // shadcn/ui (adjust imports if your project structure differs)
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -20,6 +21,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { toast } from "sonner";
 
 /* ------------------- Helpers & small components ------------------- */
 
@@ -207,6 +209,15 @@ const Products: React.FC = () => {
     }
   }, [selectedProduct]);
 
+  // Add to cart with toast notification
+  const handleAddToCart = (product: Product) => {
+    addToCart(product);
+    toast.success(`${product.title} added to cart!`, {
+      position: 'bottom-right',
+      duration: 2000,
+    });
+  };
+
   const handleAddReview = () => {
     if (!currentUser) {
       alert("Please login to leave a review.");
@@ -315,7 +326,20 @@ const Products: React.FC = () => {
                   </CardContent>
 
                   <CardFooter className="p-4 pt-0 flex items-center gap-2">
-                    <Button className="flex-1" onClick={() => addToCart(product)} disabled={outOfStock}>
+                    <Button 
+                      onClick={() => {
+                        addToCart(product);
+                        toast.success(`${product.title} added to cart!`, {
+                          style: {
+                            backgroundColor: 'darkgreen', // A nice green color
+                            color: 'white',
+                          },
+                          position: 'bottom-right',
+                          duration: 2000,
+                        });
+                      }} 
+                      disabled={outOfStock}
+                    >
                       <ShoppingCart className="w-4 h-4 mr-2" />
                       {outOfStock ? "Out of stock" : "Add to cart"}
                     </Button>
@@ -371,7 +395,7 @@ const Products: React.FC = () => {
                   <SaleBadge isOnSale={selectedProduct.isOnSale} discountPercentage={selectedProduct.discountPercentage} />
                 </div>
                 <p className="mt-3 text-sm leading-6">{selectedProduct.description}</p>
-                <Button onClick={() => addToCart(selectedProduct)} className="mt-4">
+                <Button onClick={() => handleAddToCart(selectedProduct)} className="mt-4">
                   <ShoppingCart className="w-4 h-4 mr-2" /> Add to Cart
                 </Button>
               </div>
