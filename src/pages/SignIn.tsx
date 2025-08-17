@@ -24,7 +24,7 @@ const Signin: React.FC = () => {
   };
 
   return (
-    <div className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 text-white">
+    <div className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden bg-gradient-to-br from-black via-neutral-900 to-gray-800 text-white">
       
       {/* Background Blobs (static, same as signup) */}
       <div className="absolute w-72 h-72 bg-white/20 rounded-full blur-3xl top-10 left-10" />
@@ -75,14 +75,9 @@ const Signin: React.FC = () => {
                 {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
               </button>
             </div>
-            <div className="flex justify-end">
-              <Link to="/auth/forgot-password" className="text-sm text-yellow-300">
-                Forgot Password?
-              </Link>
-            </div>
             <Button
               type="submit"
-              className="w-full bg-yellow-400 text-black font-semibold hover:bg-yellow-500"
+              className="w-full bg-black text-white font-semibold hover:bg-gray-900 border border-white/20"
             >
               Log In
             </Button>
@@ -91,7 +86,7 @@ const Signin: React.FC = () => {
           {/* Link to sign up */}
           <p className="text-sm text-center mt-4 text-gray-100">
             Don’t have an account?{" "}
-            <Link to="/sign-up" className="text-yellow-300 font-semibold">
+            <Link to="/sign-up" className="text-black font-bold">
               Sign Up
             </Link>
           </p>

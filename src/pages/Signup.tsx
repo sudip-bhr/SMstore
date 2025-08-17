@@ -25,7 +25,7 @@ const Signup: React.FC = () => {
   };
 
   return (
-    <div className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 text-white">
+    <div className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden bg-gradient-to-br from-black via-neutral-900 to-gray-800 text-white">
       
       {/* Animated Blobs */}
       <motion.div
@@ -100,7 +100,7 @@ const Signup: React.FC = () => {
             </div>
             <Button
               type="submit"
-              className="w-full bg-yellow-400 text-black font-semibold hover:bg-yellow-500"
+              className="w-full bg-black text-white font-semibold hover:bg-gray-900 border border-white/20"
             >
               Sign Up
             </Button>
@@ -109,7 +109,7 @@ const Signup: React.FC = () => {
           {/* Link to Sign In */}
           <p className="text-sm text-center mt-4 text-gray-100">
             Already have an account?{" "}
-            <Link to="/sign-in" className="text-yellow-300 font-semibold">
+            <Link to="/sign-in" className="text-black font-bold">
               Log In
             </Link>
           </p>
