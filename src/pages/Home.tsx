@@ -107,8 +107,8 @@ const HeroWithDealCountdown: React.FC<{
             Add to Cart
           </Button>
           <Link to="/products">
-            <Button size="lg" variant="outline">
-              Shop Now
+            <Button size="lg">
+              View all products
             </Button>
           </Link>
         </div>
