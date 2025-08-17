@@ -9,7 +9,7 @@ import airpodspro from '../assets/images/AirPods_Pro .jpeg';
 import logitechmxmaster from '../assets/images/Logitech_MX_Master_3S.jpeg';
 import lgoledc4 from '../assets/images/LG_OLED_C4.jpeg';
 import asusrogstrix from '../assets/images/Asus_ROG_Strix_G16.jpeg';
-//import bosequitecomfort from '../assets/images/Bose_QuietComfort_Ultra.jpeg';
+import bosequitecomfort from '../assets/images/Bose_QuietComfort_Ultra.jpeg';
 import garimforerunner from '../assets/images/Garmin_Forerunner_965.jpeg';
 import canoneosr8 from '../assets/images/Canon_EOS_R8.jpeg';
 import nintendoswitcholed from '../assets/images/Nintendo_Switch_OLED.jpeg';
@@ -274,7 +274,7 @@ export const mockProducts: Product[] = [
     brand: "Bose",
     color: "Triple Black",
     stock: 18,
-    images: [asusrogstrix],
+    images: [bosequitecomfort],
     ratings: [
       { star: 4, comment: "Excellent sound, slightly bulky.", postedBy: "User666" }
     ],

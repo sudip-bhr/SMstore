@@ -1,70 +1,225 @@
-# React + TypeScript + Vite
+# SMstore - E-commerce Platform Documentation
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Project Overview
+SMstore is a modern e-commerce platform built with cutting-edge web technologies. It provides a seamless shopping experience with features like product browsing, cart management, and user authentication.
 
-Currently, two official plugins are available:
+## Key Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### Product Management
+- Browse products by categories
+- Search and filter products
+- View product details and images
+- Read and write product reviews
 
-## Expanding the ESLint configuration
+### Shopping Cart
+- Add/remove products
+- Adjust quantities
+- View cart summary
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### User Authentication
+- Email/password login
+- Social login options
+- User profile management
+- Order history
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+### Checkout Process
+- Order checkout
+- Order received through email
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Dependencies
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+### Core
+- React - UI Library
+- TypeScript - Type checking
+- Vite - Build tool
+- React Router - Navigation
 
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+### UI & Styling
+- Tailwind CSS - Utility-first CSS
+- shadcn/ui - Component library
+- Lucide Icons - Icon set
+
+### Others
+- fusejs
+- emailjs
+
+
+
+## Technology Stack
+
+### TypeScript
+- Catch errors during development
+- Provide better code completion and documentation
+- Enable more predictable refactoring
+- Improve code maintainability
+
+### React
+- Functional components with Hooks
+- Context API for state management
+- React Router for navigation
+- Custom hooks for reusable logic
+
+### Tailwind CSS with shadcn/ui
+- Consistent design system
+- Responsive design out of the box
+- Dark/light mode support
+- Highly customizable components
+- Built-in accessibility features
+
+
+
+## Project setup Guide
+
+### Create React App
+
+# Create react app with typescript and vite
+npm create vite@latest SMstore --template react-ts
+
+# Navigate to the project directory
+cd SMstore
+
+# Install dependencies
+npm install
+
+# Run the development server
+npm run dev
+
+open http://localhost:5173 to access the application
+
+
+
+### Github Setup
+
+# Initialize Git in the project folder
+git init
+
+# Add remote repository
+git remote add origin https://github.com/sudip-bhr/SMstore.git
+
+# Stage all files
+git add .
+
+# Commit changes
+git commit -m "Initial Commit"
+
+# Push to GitHub
+git push -u origin main
+
+
+
+### TypeScript Setup
+
+# Install typescript globally
+npm install -g typescript
+
+# Add typescript to project
+
+npm install --save-dev typescript
+
+# Initialize typescript
+npx tsc --init
+
+# Compile typescript files manually
+npx tsc
+
+
+
+### Setup Tailwind
+
+# Install tailwindcss related packages
+npm install -D tailwindcss postcss autoprefixer
+
+npx tailwindcss init -p
+
+#### configure tailwind.config.js
+content: [
+  "./index.html",
+  "./src/**/*.{js,ts,jsx,tsx}"
+],
+theme: {
+  extend: {},
+},
+plugins: [],
+
+#### Add tailwind directives to src.index.css
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+
+### Shadcn/UI Setup
+
+# initialize shadcn-ui in the project
+npx shadcn-ui@latest init
+
+# add component using shadcn CLI
+npx shadcn-ui@latest add button
+
+### Install other dependencies (routing, state management, icons, animations, dialogues, etc)
+
+npm install react-router-dom @reduxjs/toolkit react-redux framer-motion lucide-react embla-carousel-react vaul sonner
+
+
+
+## Project Structure
+
+SMstore/
+├── public/                         # Static assets served directly
+│   ├── favicon.ico                 # Website favicon
+│   ├── vite.svg                    # Vite logo
+│   ├── robots.txt                  # Search engine instructions
+│   └── assets/                     # Additional static assets
+│
+├── src/                            # Main source code
+│   ├── assets/                     # Images and icons
+│   │
+│   ├── components/                 # Reusable UI components
+│   │   ├── ui/                     # shadcn/ui generated components
+│   │   ├── Header.tsx              # Navigation header
+│   │   ├── Footer.tsx              # Footer section
+│   │   ├── ProductCard.tsx         # Product display card
+│   │   ├── CartItem.tsx            # Shopping cart item
+│   │   ├── LoadingSpinner.tsx      # Loading indicator
+│   │   ├── ErrorBoundary.tsx       # Error handling
+│   │   └── ThemeProvider.tsx       # Dark/Light theme management
+│   │
+│   ├── context/                    # React Context providers
+│   │   ├── AuthContext.tsx         # Authentication state
+│   │   ├── CartContext.tsx         # Cart state
+│   │   └── ProductContext.tsx      # Product data state
+│   │
+│   ├── lib/                        # Utilities and helpers
+│   │   ├── utils.ts                # Common helper functions
+│   │   ├── api.ts                  # API client and requests
+│   │   └── constants.ts            # App-wide constants
+│   │
+│   ├── pages/                      # Application pages
+│   │   ├── Products.tsx            # Product listing
+│   │   ├── ProductDetail.tsx       # Single product view
+│   │   ├── Cart.tsx                # Cart page
+│   │   ├── Checkout.tsx            # Checkout flow
+│   │   ├── Auth.tsx                # Login/Signup page
+│   │   ├── Profile.tsx             # User profile
+│   │   └── NotFound.tsx            # 404 page
+│   │
+│   ├── App.tsx                     # Main App component
+│   ├── main.tsx                    # Application entry point
+│   ├── index.css                   # Global styles
+│   └── vite-env.d.ts               # TypeScript declarations
+│
+├── node_modules/                   # Installed npm dependencies
+│
+├── package.json                    # Project dependencies & scripts
+├── tsconfig.json                   # TypeScript configuration
+├── vite.config.ts                  # Vite configuration
+├── tailwind.config.js              # Tailwind CSS config
+├── components.json                 # shadcn/ui config
+├── eslint.config.js                # ESLint config
+├── postcss.config.js               # PostCSS config
+└── .gitignore                      # Git ignore rules
+
+
 # SMstore
