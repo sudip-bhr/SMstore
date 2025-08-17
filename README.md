@@ -1,7 +1,7 @@
 # SMstore - E-commerce Platform Documentation
 
 ## Project Overview
-SMstore is a modern e-commerce platform built with cutting-edge web technologies. It provides a seamless shopping experience with features like product browsing, cart management, and user authentication.
+SMstore is a modern e-commerce platform built using React + Vite + Typescript and styled using Tailwind CSS and ShadCN. It provides a seamless shopping experience with features like product browsing, cart management, and user authentication.
 
 ## Key Features
 
@@ -42,8 +42,8 @@ SMstore is a modern e-commerce platform built with cutting-edge web technologies
 - Lucide Icons - Icon set
 
 ### Others
-- fusejs
-- emailjs
+- Fusejs - Dynamic search
+- Emailjs - Order Confirmation
 
 
 
@@ -74,16 +74,16 @@ SMstore is a modern e-commerce platform built with cutting-edge web technologies
 
 ### Create React App
 
-# Create react app with typescript and vite
+#### Create react app with typescript and vite
 npm create vite@latest SMstore --template react-ts
 
-# Navigate to the project directory
+#### Navigate to the project directory
 cd SMstore
 
-# Install dependencies
+#### Install dependencies
 npm install
 
-# Run the development server
+#### Run the development server
 npm run dev
 
 open http://localhost:5173 to access the application
@@ -92,43 +92,43 @@ open http://localhost:5173 to access the application
 
 ### Github Setup
 
-# Initialize Git in the project folder
+#### Initialize Git in the project folder
 git init
 
-# Add remote repository
+#### Add remote repository
 git remote add origin https://github.com/sudip-bhr/SMstore.git
 
-# Stage all files
+#### Stage all files
 git add .
 
-# Commit changes
+#### Commit changes
 git commit -m "Initial Commit"
 
-# Push to GitHub
+#### Push to GitHub
 git push -u origin main
 
 
 
 ### TypeScript Setup
 
-# Install typescript globally
+#### Install typescript globally
 npm install -g typescript
 
-# Add typescript to project
+#### Add typescript to project
 
 npm install --save-dev typescript
 
-# Initialize typescript
+#### Initialize typescript
 npx tsc --init
 
-# Compile typescript files manually
+#### Compile typescript files manually
 npx tsc
 
 
 
 ### Setup Tailwind
 
-# Install tailwindcss related packages
+#### Install tailwindcss related packages
 npm install -D tailwindcss postcss autoprefixer
 
 npx tailwindcss init -p
@@ -152,13 +152,13 @@ plugins: [],
 
 ### Shadcn/UI Setup
 
-# initialize shadcn-ui in the project
+#### initialize shadcn-ui in the project
 npx shadcn-ui@latest init
 
-# add component using shadcn CLI
-npx shadcn-ui@latest add button
+#### add component using shadcn CLI
+npx shadcn-ui@latest add button (likewise other components)
 
-### Install other dependencies (routing, state management, icons, animations, dialogues, etc)
+#### Install other dependencies (routing, state management, icons, animations, dialogues, etc)
 
 npm install react-router-dom @reduxjs/toolkit react-redux framer-motion lucide-react embla-carousel-react vaul sonner
 
