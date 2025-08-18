@@ -4,10 +4,10 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import emailjs from "@emailjs/browser";
 import type { CartItem } from "../context/CartContext";
-
+import { toast } from "sonner";
 interface CheckoutModalProps {
   open: boolean;
-  onClose: () => void;
+  onClose : () => void;
   cart: CartItem[];
   subtotal: number;
   clearCart: () => void;
@@ -24,7 +24,7 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({ open, onClose, cart, subt
     setLoading(true);
 
     const serviceID = "service_1gu2x03";
-    const templateID = "template_rgj4v1k"; // admin template
+    const templateID = "template_rgj4v1k";
     const publicKey = "OUE99KDakT-SxRtjI";
 
     const orderDetails = cart
@@ -48,10 +48,10 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({ open, onClose, cart, subt
 
       clearCart();
       onClose();
-      alert("Order placed! Admin will be notified.");
+      toast ("Order placed! Admin will be notified." );
     } catch (error) {
       console.error("Email send failed:", error);
-      alert("Failed to send order email.");
+      toast("Failed to send order email.");
     } finally {
       setLoading(false);
     }
