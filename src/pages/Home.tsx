@@ -13,18 +13,14 @@ import {
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { Badge } from "@/components/ui/badge";
 import type { Product as ImportedProduct, Product } from "@/utils/types";
-import Fuse from "fuse.js";
 
-/* ------------------------------------------------------------------ */
-/* Corrected Types */
-/* ------------------------------------------------------------------ */
 type Review = { star: number; comment: string; postedBy: string; id?: string };
 
 type ProductWithExtras = Omit<ImportedProduct, "reviews" | "ratings"> & {
   _id?: string;
   images?: string[];
   reviews?: Review[];
-  ratings?: number; // numeric rating average
+  ratings?: number; 
   dealEndsAt?: string;
   isOnSale?: boolean;
   discountPercentage?: number;
@@ -36,9 +32,7 @@ type ProductWithExtras = Omit<ImportedProduct, "reviews" | "ratings"> & {
   description?: string;
 };
 
-/* ------------------------------------------------------------------ */
-/* Helpers */
-/* ------------------------------------------------------------------ */
+
 const formatPrice = (p = 0) => `$${p.toFixed(2)}`;
 
 function useCountdown(targetIso?: string) {
@@ -58,9 +52,7 @@ function useCountdown(targetIso?: string) {
   return { diff, days, hours, minutes, seconds };
 }
 
-/* ------------------------------------------------------------------ */
-/* Hero With Deal Countdown + Glow Animation */
-/* ------------------------------------------------------------------ */
+
 const HeroWithDealCountdown: React.FC<{
   product: ProductWithExtras;
   onAdd: (p: ProductWithExtras) => void;
@@ -355,21 +347,6 @@ const Home: React.FC = () => {
     [allProducts]
   );
 
-  // live search with Fuse
-  const fuse = useMemo(
-    () =>
-      new Fuse(allProducts, {
-        keys: ["title", "brand", "category", "description"],
-        threshold: 0.35,
-      }),
-    [allProducts]
-  );
-
-  const searchResults = useMemo(() => {
-    if (!query) return allProducts;
-    return fuse.search(query).map((r) => r.item);
-  }, [query, allProducts, fuse]);
-
   // loading simulation
   useEffect(() => {
     setIsLoading(true);
@@ -447,33 +424,6 @@ const Home: React.FC = () => {
           onQuickView={setQuick}
           onAdd={(p) =>addToCart(p as unknown as Product)}
         />
-
-        {/* Live Search Results */}
-        {query && (
-          <section>
-            <h3 className="text-lg font-semibold mb-3">
-              Search results for “{query}”
-            </h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-              {(isLoading
-                ? Array.from({ length: 8 }).map((_, i) => (
-                    <div key={i} className="animate-pulse p-3">
-                      <div className="w-full h-48 bg-gray-200 rounded-md mb-3" />
-                      <div className="h-4 bg-gray-200 rounded w-3/4 mb-2" />
-                      <div className="h-3 bg-gray-200 rounded w-1/2" />
-                    </div>
-                  ))
-                : searchResults.slice(0, 8).map((p) => (
-                    <ProductCard
-                      key={p._id ?? p.title ?? Math.random()}
-                      product={p}
-                      onQuickView={setQuick}
-                     onAdd={(p) =>addToCart(p as unknown as Product)}
-                    />
-                  )))}
-            </div>
-          </section>
-        )}
       </div>
 
       {/* Quick view modal */}
