@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
 import type { Product } from "../utils/types";
+import { useAuth } from "./AuthContext";
 
 export interface CartItem extends Product {
   quantity: number;
@@ -17,20 +18,24 @@ interface CartContextType {
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
 export const CartProvider = ({ children }: { children: ReactNode }) => {
-  const [cart, setCart] = useState<CartItem[]>(JSON.parse(localStorage.getItem("cart") || "[]") );
+  const { currentUser } = useAuth();
+  const [cart, setCart] = useState<CartItem[]>([]);
+
 
   useEffect(() => {
-    const savedCart = localStorage.getItem("cart");
-    if (savedCart) {
-      setCart(JSON.parse(savedCart));
+    if (currentUser) {
+      const savedCart = localStorage.getItem(`cart_${currentUser.email}`);
+      setCart(savedCart ? JSON.parse(savedCart) : []);
+    } else {
+      setCart([]);
     }
-  }, []);
+  }, [currentUser]);
 
-  // Save to localStorage whenever cart changes
   useEffect(() => {
-    localStorage.setItem("cart", JSON.stringify(cart));
-  }, [cart]);
-
+    if (currentUser) {
+      localStorage.setItem(`cart_${currentUser.email}`, JSON.stringify(cart));
+    }
+  }, [cart, currentUser]);
 
   const addToCart = (product: Product) => {
     setCart((prevCart) => {
@@ -60,7 +65,8 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const clearCart = () => setCart([]);
-    const totalPrice = cart.reduce(
+
+  const totalPrice = cart.reduce(
     (sum, item) => sum + item.price * item.quantity,
     0
   );
@@ -78,3 +84,4 @@ export const useCart = () => {
   if (!context) throw new Error("useCart must be used within a CartProvider");
   return context;
 };
+

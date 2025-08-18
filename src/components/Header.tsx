@@ -22,7 +22,7 @@ const Header = () => {
 
   const linkClasses = ({ isActive }: { isActive: boolean }) =>
     `relative px-4 py-2 text-lg transition duration-300 ${
-      isActive ? "text-blue-500" : "text-gray-800"
+      isActive ? "text-black" : "text-gray-800"
     } group`;
 
   return (
@@ -54,11 +54,11 @@ const Header = () => {
           <nav className="hidden md:flex items-center space-x-8">
             <NavLink to="/" className={linkClasses}>
               Home
-              <span className="absolute left-0 bottom-0 w-0 h-[2px] bg-blue-500 transition-all group-hover:w-full"></span>
+              <span className="absolute left-0 bottom-0 w-0 h-[2px] bg-black transition-all group-hover:w-full"></span>
             </NavLink>
             <NavLink to="/products" className={linkClasses}>
               Products
-              <span className="absolute left-0 bottom-0 w-0 h-[2px] bg-blue-500 transition-all group-hover:w-full"></span>
+              <span className="absolute left-0 bottom-0 w-0 h-[2px] bg-black transition-all group-hover:w-full"></span>
             </NavLink>
           </nav>
 
@@ -107,7 +107,7 @@ const Header = () => {
                 <Button
                   onClick={handleLogout}
                  size="lg"
-            className="bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 transform transition-transform hover:scale-105"
+            className="bg-gradient-to-r from-black to-gray-900 hover:from-black hover:to-neutral-900 transform transition-transform hover:scale-110"
                 >
                   Logout
                 </Button>
@@ -118,7 +118,7 @@ const Header = () => {
               >
                 <Button
                   size="lg"
-                  className="bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 transform transition-transform hover:scale-105"
+                  className="bg-gradient-to-r from-black to-gray-800 hover:from-black hover:to-neutral-900 transform transition-transform hover:scale-105"
                   >
                   <FaUser className="mr-1" /> Sign Up
                 </Button>
@@ -138,7 +138,7 @@ const Header = () => {
               <NavLink
                 to="/"
                 onClick={toggleMenu}
-                className="text-gray-800 hover:text-blue-500 transition"
+                className="text-gray-800 hover:text-blue-600 transition"
               >
                 Home
               </NavLink>

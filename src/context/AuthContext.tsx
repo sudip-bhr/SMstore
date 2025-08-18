@@ -1,6 +1,6 @@
 import { createContext, useState, useEffect, useContext, type ReactNode } from "react";
 
-interface User {
+export interface User {
   username: string;
   email: string;
   password: string; // storing plain password is not secure — only for demo
@@ -50,6 +50,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const logout = () => {
     localStorage.removeItem("currentUser");
     setCurrentUser(null);
+    // ❌ don't call clearCart here → CartContext will handle it
   };
 
   return (
@@ -65,3 +66,4 @@ export const useAuth = () => {
   if (!context) throw new Error("useAuth must be used within an AuthProvider");
   return context;
 };
+

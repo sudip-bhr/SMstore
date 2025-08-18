@@ -101,7 +101,7 @@ const HeroWithDealCountdown: React.FC<{
         <div className="mt-6 flex gap-3">
           <Button
             size="lg"
-            className="bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 transform transition-transform hover:scale-105"
+            className="w-full bg-white text-black font-semibold hover:bg-white border border-black/20 transform transition-transform hover:scale-105"
             onClick={() => onAdd(product)}
           >
             Add to Cart

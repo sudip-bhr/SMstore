@@ -1,12 +1,10 @@
 // Products.tsx
 import React, { useEffect, useMemo, useState } from "react";
-import Fuse, { type IFuseOptions, type FuseResult } from "fuse.js";
 import { Star, ShoppingCart, Eye, Tag, Percent } from "lucide-react";
 import { useCart } from "../context/CartContext";
 import { useAuth } from "../context/AuthContext";
 import { useProducts } from "@/context/ProductContext";
 import type { Product, Review } from "@/utils/types";
-
 
 // shadcn/ui (adjust imports if your project structure differs)
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
@@ -23,28 +21,65 @@ import {
 } from "@/components/ui/select";
 import { toast } from "sonner";
 
-/* ------------------- Helpers & small components ------------------- */
+/* ------------------- Helpers ------------------- */
+const formatPrice = (n: number) =>
+  n.toLocaleString(undefined, { style: "currency", currency: "USD" });
+const clamp = (v: number, min: number, max: number) =>
+  Math.max(min, Math.min(max, v));
 
-const formatPrice = (n: number) => n.toLocaleString(undefined, { style: "currency", currency: "USD" });
-const clamp = (v: number, min: number, max: number) => Math.max(min, Math.min(max, v));
+// ✅ case-insensitive highlight, preserves original casing
+const highlightMatch = (text: string = "", query: string) => {
+  if (!query) return text;
+  const regex = new RegExp(`(${query})`, "ig");
+  const parts = text.split(regex);
 
-const ImageWithFallback: React.FC<{ src?: string; alt: string; className?: string }> = ({ src, alt, className }) => {
+  return parts.map((part, i) =>
+    part.toLowerCase() === query.toLowerCase() ? (
+      <mark key={i} className="bg-yellow-100 rounded px-[2px]">
+        {part}
+      </mark>
+    ) : (
+      part
+    )
+  );
+};
+
+const ImageWithFallback: React.FC<{ src?: string; alt: string; className?: string }> = ({
+  src,
+  alt,
+  className,
+}) => {
   const [broken, setBroken] = useState(false);
   if (!src || broken) {
     return (
       <div
         role="img"
         aria-label={`${alt} (image unavailable)`}
-        className={"flex items-center justify-center bg-gray-100 text-gray-400 text-xs " + (className || "h-48 w-full rounded-md")}
+        className={
+          "flex items-center justify-center bg-gray-100 text-gray-400 text-xs " +
+          (className || "h-48 w-full rounded-md")
+        }
       >
         No image
       </div>
     );
   }
-  return <img src={src} alt={alt} className={className} onError={() => setBroken(true)} loading="lazy" />;
+  return (
+    <img
+      src={src}
+      alt={alt}
+      className={className}
+      onError={() => setBroken(true)}
+      loading="lazy"
+    />
+  );
 };
 
-const Stars: React.FC<{ value: number; size?: number; className?: string }> = ({ value, size = 18, className }) => {
+const Stars: React.FC<{ value: number; size?: number; className?: string }> = ({
+  value,
+  size = 18,
+  className,
+}) => {
   const rounded = Math.round(value ?? 0);
   return (
     <div className={"flex items-center gap-0.5 " + (className || "")}>
@@ -62,32 +97,20 @@ const Stars: React.FC<{ value: number; size?: number; className?: string }> = ({
   );
 };
 
-const SaleBadge: React.FC<{ isOnSale?: boolean; discountPercentage?: number }> = ({ isOnSale, discountPercentage }) => {
+const SaleBadge: React.FC<{ isOnSale?: boolean; discountPercentage?: number }> = ({
+  isOnSale,
+  discountPercentage,
+}) => {
   if (!isOnSale || !discountPercentage) return null;
   return (
     <Badge variant="destructive" className="flex items-center gap-1 w-fit">
-      <Tag className="w-3 h-3" /> <Percent className="w-3 h-3" /> {discountPercentage}% OFF
+      <Tag className="w-3 h-3" /> <Percent className="w-3 h-3" />{" "}
+      {discountPercentage}% OFF
     </Badge>
   );
 };
 
-// highlightWithIndices expects the exact tuple type Fuse returns: readonly [number, number][]
-const highlightWithIndices = (text: string, indices?: readonly [number, number][]) => {
-  if (!indices || indices.length === 0) return text;
-  const parts: React.ReactNode[] = [];
-  let last = 0;
-  indices.forEach(([s, e], idx) => {
-    if (s < 0 || e < s || s >= text.length) return;
-    if (s > last) parts.push(text.slice(last, s));
-    parts.push(<mark key={idx} className="bg-yellow-100 rounded px-[2px]">{text.slice(s, e + 1)}</mark>);
-    last = e + 1;
-  });
-  if (last < text.length) parts.push(text.slice(last));
-  return parts;
-};
-
 /* ------------------- Main Products component ------------------- */
-
 const Products: React.FC = () => {
   const { products } = useProducts();
   const { addToCart } = useCart();
@@ -107,70 +130,45 @@ const Products: React.FC = () => {
 
   const productsPerPage = 6;
 
-  // debounce searchTerm so Fuse isn't run on every keystroke
+  // debounce searchTerm
   useEffect(() => {
     const t = setTimeout(() => setDebouncedTerm(searchTerm.trim()), 220);
     return () => clearTimeout(t);
   }, [searchTerm]);
 
   // categories
-  const categories = useMemo(() => ["All", ...Array.from(new Set((products || []).map((p) => p.category)))], [products]);
+  const categories = useMemo(
+    () => ["All", ...Array.from(new Set((products || []).map((p) => p.category)))],
+    [products]
+  );
 
-  // prefilter by category first (smaller dataset for Fuse)
+  // filter by category
   const prefilteredByCategory = useMemo(() => {
     if (!products) return [];
-    return (products || []).filter((p) => selectedCategory === "All" || p.category === selectedCategory);
+    return (products || []).filter(
+      (p) => selectedCategory === "All" || p.category === selectedCategory
+    );
   }, [products, selectedCategory]);
 
-  // Fuse config — typed as IFuseOptions<Product>
-  const fuse = useMemo(() => {
-    const normalized = (prefilteredByCategory || []).map(p => ({
-    ...p,
-    title: p.title || "",
-    brand: p.brand || "",
-    description: p.description || "",
-    category: p.category || "",
-  }));
+  // run search (plain filter, no Fuse)
+  const searchedList = useMemo(() => {
+    if (!debouncedTerm) return prefilteredByCategory || [];
 
-    const options: IFuseOptions<Product> = {
-      includeMatches: true,
-      includeScore: true,
-      shouldSort: true,
-      threshold: 0.35, // tweak for sensitivity
-      ignoreLocation: true,
-      minMatchCharLength: 1,
-      keys: [
-        { name: "title", weight: 0.6 },
-        { name: "brand", weight: 0.4 },
-        { name: "description", weight: 0.05 },
-        { name: "category", weight: 0.4 },
-      ],
-    };
-    return new Fuse(normalized, options);
-  }, [prefilteredByCategory]);
+    const term = debouncedTerm.toLowerCase();
 
-  // run search (or fallback to prefiltered list)
-  const { searchedList, matchesMap } = useMemo(() => {
-    if (!debouncedTerm) {
-      return {
-        searchedList: prefilteredByCategory || [],
-        // matchesMap maps productId -> array of matches (FuseResult matches)
-        matchesMap: {} as Record<string, FuseResult<Product>["matches"]>,
-      };
-    }
-
-    const results: FuseResult<Product>[] = fuse.search(debouncedTerm, { limit: 1000 });
-    const list = results.map((r) => r.item);
-    const map: Record<string, FuseResult<Product>["matches"]> = {};
-    results.forEach((r) => {
-      if (r.item && r.item._id) map[r.item._id] = r.matches || [];
+    return (prefilteredByCategory || []).filter((p) => {
+      return (
+        p.title?.toLowerCase().includes(term) ||
+        p.brand?.toLowerCase().includes(term) ||
+        p.description?.toLowerCase().includes(term) ||
+        p.category?.toLowerCase().includes(term)
+      );
     });
-    return { searchedList: list, matchesMap: map };
-  }, [fuse, debouncedTerm, prefilteredByCategory]);
+  }, [debouncedTerm, prefilteredByCategory]);
 
   // sorting
   const filteredProducts = useMemo(() => {
-    const list = (searchedList || []).slice();
+    const list = searchedList.slice();
     switch (sort) {
       case "Price: Low to High":
         list.sort((a, b) => a.price - b.price);
@@ -180,9 +178,6 @@ const Products: React.FC = () => {
         break;
       case "Rating":
         list.sort((a, b) => (b.totalrating || 0) - (a.totalrating || 0));
-        break;
-      default:
-        // keep Fuse ordering for "Featured"
         break;
     }
     return list;
@@ -196,10 +191,12 @@ const Products: React.FC = () => {
 
   // keep currentPage valid when results change
   useEffect(() => {
-    setCurrentPage((p) => clamp(p, 1, Math.max(1, Math.ceil(filteredProducts.length / productsPerPage))));
+    setCurrentPage((p) =>
+      clamp(p, 1, Math.max(1, Math.ceil(filteredProducts.length / productsPerPage)))
+    );
   }, [filteredProducts.length]);
 
-  // load reviews for selected product from localStorage
+  // load reviews for selected product
   useEffect(() => {
     if (selectedProduct) {
       const stored = localStorage.getItem(`reviews_${selectedProduct._id}`);
@@ -209,11 +206,10 @@ const Products: React.FC = () => {
     }
   }, [selectedProduct]);
 
-  // Add to cart with toast notification
   const handleAddToCart = (product: Product) => {
     addToCart(product);
     toast.success(`${product.title} added to cart!`, {
-      position: 'bottom-right',
+      position: "bottom-right",
       duration: 2000,
     });
   };
@@ -232,12 +228,13 @@ const Products: React.FC = () => {
       user: currentUser.username,
       comment: reviewText,
       stars: rating,
-      postedBy: undefined
+      postedBy: undefined,
     };
 
     const updatedReviews = [...reviews, newReview];
     setReviews(updatedReviews);
-    if (selectedProduct) localStorage.setItem(`reviews_${selectedProduct._id}`, JSON.stringify(updatedReviews));
+    if (selectedProduct)
+      localStorage.setItem(`reviews_${selectedProduct._id}`, JSON.stringify(updatedReviews));
     setReviewText("");
     setRating(0);
   };
@@ -258,13 +255,21 @@ const Products: React.FC = () => {
           aria-label="Search products"
         />
 
-        <Select value={selectedCategory} onValueChange={(v: React.SetStateAction<string>) => { setSelectedCategory(v); setCurrentPage(1); }}>
+        <Select
+          value={selectedCategory}
+          onValueChange={(v: React.SetStateAction<string>) => {
+            setSelectedCategory(v);
+            setCurrentPage(1);
+          }}
+        >
           <SelectTrigger aria-label="Filter by category">
             <SelectValue placeholder="Category" />
           </SelectTrigger>
           <SelectContent>
             {categories.map((c) => (
-              <SelectItem key={c} value={c}>{c}</SelectItem>
+              <SelectItem key={c} value={c}>
+                {c}
+              </SelectItem>
             ))}
           </SelectContent>
         </Select>
@@ -294,56 +299,57 @@ const Products: React.FC = () => {
               const img = product.images?.[0];
               const outOfStock = (product.stock ?? 0) <= 0;
 
-              // get matches for highlighting from matchesMap
-              const matches = matchesMap[product._id] || [];
-              // find title match indices (if any)
-              const titleMatch = matches.find((m) => m.key === "title");
-              const titleIndices = titleMatch?.indices;
-
               return (
                 <Card key={product._id} className="overflow-hidden group">
                   <CardHeader className="p-0 relative">
-                    <ImageWithFallback src={img} alt={product.title} className="w-full h-48 object-cover" />
+                    <ImageWithFallback
+                      src={img}
+                      alt={product.title}
+                      className="w-full h-48 object-cover"
+                    />
                     <div className="absolute top-2 left-2 flex gap-2">
                       {product.featured && <Badge>Featured</Badge>}
                       {product.newArrival && <Badge variant="secondary">New</Badge>}
                     </div>
                     <div className="absolute top-2 right-2">
-                      <SaleBadge isOnSale={product.isOnSale} discountPercentage={product.discountPercentage} />
+                      <SaleBadge
+                        isOnSale={product.isOnSale}
+                        discountPercentage={product.discountPercentage}
+                      />
                     </div>
                   </CardHeader>
 
                   <CardContent className="p-4">
                     <h2 className="font-semibold text-base line-clamp-1" title={product.title}>
-                      {titleIndices ? highlightWithIndices(product.title, titleIndices) : product.title}
+                      {highlightMatch(product.title, debouncedTerm)}
                     </h2>
-                    <p className="text-xs text-muted-foreground line-clamp-1">{product.brand}</p>
+                    <p className="text-xs text-muted-foreground line-clamp-1">
+                      {highlightMatch(product.brand, debouncedTerm)}
+                    </p>
                     <div className="mt-2 flex items-center justify-between">
-                      <p className="text-lg font-bold text-blue-600">{formatPrice(product.price)}</p>
+                      <p className="text-lg font-bold text-blue-600">
+                        {formatPrice(product.price)}
+                      </p>
                       <Stars value={product.totalrating || 0} />
                     </div>
-                    <p className="mt-2 text-sm text-muted-foreground line-clamp-2">{product.description}</p>
+                    <p className="mt-2 text-sm text-muted-foreground line-clamp-2">
+                      {highlightMatch(product.description, debouncedTerm)}
+                    </p>
                   </CardContent>
 
                   <CardFooter className="p-4 pt-0 flex items-center gap-2">
-                    <Button 
-                      onClick={() => {
-                        addToCart(product);
-                        toast.success(`${product.title} added to cart!`, {
-                          style: {
-                            backgroundColor: 'darkgreen', // A nice green color
-                            color: 'white',
-                          },
-                          position: 'bottom-right',
-                          duration: 2000,
-                        });
-                      }} 
+                    <Button
+                      onClick={() => handleAddToCart(product)}
                       disabled={outOfStock}
                     >
                       <ShoppingCart className="w-4 h-4 mr-2" />
                       {outOfStock ? "Out of stock" : "Add to cart"}
                     </Button>
-                    <Button variant="outline" onClick={() => setSelectedProduct(product)} aria-label={`Quick view for ${product.title}`}>
+                    <Button
+                      variant="outline"
+                      onClick={() => setSelectedProduct(product)}
+                      aria-label={`Quick view for ${product.title}`}
+                    >
                       <Eye className="w-4 h-4" />
                     </Button>
                   </CardFooter>
@@ -354,15 +360,27 @@ const Products: React.FC = () => {
 
           {/* Pagination */}
           <div className="flex justify-center items-center gap-2 mt-8">
-            <Button variant="outline" onClick={() => setCurrentPage((p) => clamp(p - 1, 1, totalPages))} disabled={currentPage === 1}>
+            <Button
+              variant="outline"
+              onClick={() => setCurrentPage((p) => clamp(p - 1, 1, totalPages))}
+              disabled={currentPage === 1}
+            >
               Prev
             </Button>
             {Array.from({ length: totalPages }).map((_, i) => (
-              <Button key={i} variant={currentPage === i + 1 ? "default" : "outline"} onClick={() => setCurrentPage(i + 1)}>
+              <Button
+                key={i}
+                variant={currentPage === i + 1 ? "default" : "outline"}
+                onClick={() => setCurrentPage(i + 1)}
+              >
                 {i + 1}
               </Button>
             ))}
-            <Button variant="outline" onClick={() => setCurrentPage((p) => clamp(p + 1, 1, totalPages))} disabled={currentPage === totalPages}>
+            <Button
+              variant="outline"
+              onClick={() => setCurrentPage((p) => clamp(p + 1, 1, totalPages))}
+              disabled={currentPage === totalPages}
+            >
               Next
             </Button>
           </div>
@@ -389,10 +407,15 @@ const Products: React.FC = () => {
               />
               <div>
                 <p className="text-sm text-muted-foreground">{selectedProduct.brand}</p>
-                <p className="text-lg font-semibold text-blue-600">{formatPrice(selectedProduct.price)}</p>
+                <p className="text-lg font-semibold text-blue-600">
+                  {formatPrice(selectedProduct.price)}
+                </p>
                 <div className="mt-2 flex items-center gap-2">
                   <Stars value={selectedProduct.totalrating || 0} />
-                  <SaleBadge isOnSale={selectedProduct.isOnSale} discountPercentage={selectedProduct.discountPercentage} />
+                  <SaleBadge
+                    isOnSale={selectedProduct.isOnSale}
+                    discountPercentage={selectedProduct.discountPercentage}
+                  />
                 </div>
                 <p className="mt-3 text-sm leading-6">{selectedProduct.description}</p>
                 <Button onClick={() => handleAddToCart(selectedProduct)} className="mt-4">
@@ -429,7 +452,9 @@ const Products: React.FC = () => {
                       {Array.from({ length: 5 }).map((_, i) => (
                         <Star
                           key={i}
-                          className={`w-6 h-6 cursor-pointer ${i < rating ? "text-yellow-500" : "text-gray-300"}`}
+                          className={`w-6 h-6 cursor-pointer ${
+                            i < rating ? "text-yellow-500" : "text-gray-300"
+                          }`}
                           fill={i < rating ? "currentColor" : "none"}
                           onClick={() => setRating(i + 1)}
                         />
@@ -444,7 +469,9 @@ const Products: React.FC = () => {
                     <Button onClick={handleAddReview}>Submit Review</Button>
                   </div>
                 ) : (
-                  <p className="text-muted-foreground">You must be logged in to leave a review.</p>
+                  <p className="text-muted-foreground">
+                    You must be logged in to leave a review.
+                  </p>
                 )}
               </div>
             </div>
@@ -456,6 +483,7 @@ const Products: React.FC = () => {
 };
 
 export default Products;
+
 
 
 
